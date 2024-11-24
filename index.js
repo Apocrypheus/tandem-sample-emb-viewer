@@ -1,4 +1,3 @@
-
 import { checkLogin } from './login.js';
 import { initLMV, startViewer } from './lmv.js';
 import * as vw_stubs from './src/vw_stubs.js';
@@ -8,6 +7,7 @@ import * as prop_stubs from './src/prop_stubs.js';
 import * as doc_stubs from './src/doc_stubs.js';
 import * as ev_stubs from './src/ev_stubs.js';
 import * as st_stubs from './src/st_stubs.js';
+import axios from 'axios';
 
 /***************************************************
 ** FUNC: noFacilitiesAvailable()
@@ -411,11 +411,25 @@ async function main() {
   });
 };
 
-
+async function exchangeAuthorizationCode(code) {
+  const env = getEnv();
+  const response = await axios.post(`${env.forgeHost}/authentication/v2/token`, {
+    client_id: env.forgeKey,
+    client_secret: 'YOUR_CLIENT_SECRET', // Replace with your Forge client secret
+    grant_type: 'authorization_code',
+    code: code,
+    redirect_uri: env.loginRedirect
+  });
+  window.sessionStorage.token = response.data.access_token;
+}
 
 // trigger things when the HTML is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  //console.log("DOMContentLoaded");
+document.addEventListener('DOMContentLoaded', async function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get('code');
+  if (code) {
+    await exchangeAuthorizationCode(code);
+  }
   main();
 });
 

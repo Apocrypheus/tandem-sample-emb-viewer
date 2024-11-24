@@ -17,7 +17,7 @@ const prodEnvironment = {
   name: "prod",
   oxygenHost: "https://accounts.autodesk.com",
   forgeHost: "https://developer.api.autodesk.com",
-  forgeKey: "DUmM9UILrlq43GT7U48SDnG9lwAgYToc", // TODO: Replace with your Forge Key to develop locally
+  forgeKey: "BLN1kJwQHyAMFOCu6wGMFyiSBHecjgDAnLurLawtHEAqEIPG", // TODO: Replace with your Forge Key to develop locally
   loginRedirect: "http://localhost:8000",
   tandemDbBaseURL: "https://tandem.autodesk.com/api/v1",
   tandemDbBaseURL_v2: "https://tandem.autodesk.com/api/v2",
